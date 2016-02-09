@@ -21,6 +21,7 @@
 
 
 (package-initialize)
+(package-refresh-contents)
 
 ;;Install missing packages
 (dolist (p my-packages)
