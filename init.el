@@ -6,7 +6,6 @@
 
 
 (defvar my-packages '(evil
-		      ecb
 		      key-chord
 		      haskell-mode
                       swiper
@@ -45,7 +44,10 @@
 (require 'ecb)
 
 (setq
- backup-directory-alist '(("." . "~/.emacs_backups"))
+ backup-by-copying t
+ backup-directory-alist `((".*" . "~/.emacs_backups"))
+ auto-save-file-name-transforms `((".*", temporary-file-directory))
+ 
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
@@ -58,5 +60,4 @@
 
 (load-theme 'wombat t)
 (set-face-attribute 'default nil :height 130)
-
 
