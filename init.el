@@ -1,9 +1,9 @@
 (require 'package)
 
 ;;Repos
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packagess/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 (defvar my-packages '(evil
 		      key-chord
@@ -16,20 +16,31 @@
 		      flycheck
                       ido-ubiquitous
                       find-file-in-project
+		      org
+		      ivy
+		      rtags
+		      swiper
                       magit
+		      projectile
 		      smex))
-
-
 (package-initialize)
-(package-refresh-contents)
-
-(setq ns-right-alternate-modifier nil)
 
 ;;Install missing packages
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
+(let ((packages-refresehd nil))
+  (when (not package-archive-contents)
+    (package-refresh-contents)
+    (setq packages-refresehd t))
 
+  (dolist (p my-packages)
+    (when (not (package-installed-p p))
+      (unless packages-refresehd
+	(package-refresh-contents)
+	(setq packages-refresehd t))
+      (package-install p))))
+
+
+
+(setq ns-right-alternate-modifier nil)
 
 (setq js-indent-level 2)
 (setq js2-strict-missing-semi-warning nil)
@@ -124,5 +135,5 @@
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't wor right.
+ ;; If there is more than one, they won't work right.
  )
